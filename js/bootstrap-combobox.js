@@ -410,6 +410,7 @@
     }
 
   , blur: function (e) {
+      if (e.relatedTarget && $(e.relatedTarget).closest(this.$container).length == 1) return;
       var that = this;
       this.focused = false;
       var val = this.$element.val();
