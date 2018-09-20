@@ -278,7 +278,7 @@
 
   , clearTarget: function () {
     this.$source.val('');
-    this.$target.val('');
+    this.$target.val('').trigger('change');
     this.$container.removeClass('combobox-selected');
     this.selected = false;
   }
@@ -422,7 +422,7 @@
         if(that.clearIfNoMatch)
           this.$element.val('');
         this.$source.val('').trigger('change');
-        this.$target.val('').trigger('change');
+        this.$target.val(val).trigger('change');
       }
       if (!this.mousedover && this.shown) {setTimeout(function () { that.hide(); }, 200);}
     }
