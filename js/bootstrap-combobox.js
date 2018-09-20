@@ -260,6 +260,7 @@
         if (this.shown) {
           this.hide();
         } else {
+          this.clearTarget();
           this.clearElement();
           this.lookup();
         }
