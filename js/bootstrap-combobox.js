@@ -252,7 +252,7 @@
 
   , toggle: function () {
     if (!this.disabled) {
-      if (this.$container.hasClass('combobox-selected')) {
+      if (this.$container.hasClass('combobox-selected') || this.$element.val() !== "") {
         this.clearTarget();
         this.triggerChange();
         this.clearElement();
@@ -260,7 +260,6 @@
         if (this.shown) {
           this.hide();
         } else {
-          this.clearTarget();
           this.clearElement();
           this.lookup();
         }
@@ -279,7 +278,7 @@
 
   , clearTarget: function () {
     this.$source.val('');
-    this.$target.val('').trigger('change');
+    this.$target.val('');
     this.$container.removeClass('combobox-selected');
     this.selected = false;
   }
