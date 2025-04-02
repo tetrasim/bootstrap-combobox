@@ -9,10 +9,20 @@
   .form-inline .combobox-container .input-group-addon {
     width: auto;
   }
+
+  .combobox-button {
+    width: 1%;
+  }
+
 }
-.combobox-selected .caret {
+
+.dropdown-clear {
   display: none;
 }
+.combobox-selected .dropdown-clear {
+  display: table-cell;
+}
+
 /* :not doesn't work in IE8 */
 .combobox-container:not(.combobox-selected) .glyphicon-remove {
   display: none;

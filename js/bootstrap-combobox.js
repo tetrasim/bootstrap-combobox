@@ -31,6 +31,7 @@
     this.$element = this.$container.find('input[type=text]');
     this.$target = this.$container.find('input[type=hidden]');
     this.$button = this.$container.find('.dropdown-toggle');
+    this.$clearButton = this.$container.find('.dropdown-clear');
     this.$menu = $(this.options.menu).appendTo('body');
     this.matcher = this.options.matcher || this.matcher;
     this.sorter = this.options.sorter || this.sorter;
@@ -180,9 +181,9 @@
 
   , template: function() {
       if (this.options.bsVersion == '2') {
-        return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>'
+        return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" /><span class="add-on dropdown-clear"> <i class="icon-remove"/></span> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> </span> </div> </div>'
       } else {
-        return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>'
+        return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" /> <span class="input-group-addon dropdown-clear combobox-button"> <span class="glyphicon glyphicon-remove" /> </span> <span class="input-group-addon dropdown-toggle combobox-button" data-dropdown="dropdown"> <span class="caret" /> </span> </div> </div>'
       }
     }
 
@@ -252,18 +253,21 @@
 
   , toggle: function () {
     if (!this.disabled) {
-      if (this.$container.hasClass('combobox-selected') || this.$element.val() !== "") {
-        this.clearTarget();
-        this.triggerChange();
-        this.clearElement();
+      if (this.shown) {
+        this.hide();
       } else {
-        if (this.shown) {
-          this.hide();
-        } else {
-          this.clearElement();
-          this.lookup();
-        }
+        this.clearElement();
+        this.lookup();
       }
+      
+    }
+  }
+
+  , clear: function() {
+    if (this.$container.hasClass('combobox-selected') || this.$element.val() !== "") {
+      this.clearTarget();
+      this.triggerChange();
+      this.clearElement();
     }
   }
 
@@ -310,6 +314,9 @@
 
       this.$button
         .on('click', $.proxy(this.toggle, this));
+
+      this.$clearButton
+        .on('click', $.proxy(this.clear, this));
     }
 
   , eventSupported: function(eventName) {
